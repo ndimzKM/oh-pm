@@ -1,0 +1,15 @@
+{
+  "name": "test-opm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-pouchdb": "^4.2.0",
+    "level": "^8.0.0",
+    "pouchdb": "^7.3.0"
+  }
+}
