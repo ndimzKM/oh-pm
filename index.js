@@ -6,7 +6,7 @@ const PouchServer = require('express-pouchdb')
 const cors = require('cors')
 
 const Store = new Level('filehost', { valueEncoding: 'binary' });
-const argparser = require('./args')
+const argparser = require('./utils/args')
 const app = express();
 const pouchapp = PouchServer(PouchDB);
 
