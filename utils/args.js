@@ -1,14 +1,3 @@
-/*
-* Arguments to support
-* -h, --help
-*  -v, --version
-*  -p, --port for your local registry
-*  -pp, --pouch-port for your pouch db server
-*  -s, --skim remote skim to sync package info from
-*  -u, --url, url to your local registry
-*  -d, --dir where to store pouchdb information
-*
-*/
 const supportedArgs = [
     '-h', '--help', '-v', '--version', '-p', '--port', '-pp',
     '--pouch-port', '-s', '--skim', '-u', '--url', '-d', '--dir'
@@ -16,20 +5,15 @@ const supportedArgs = [
 
 const args = {
     '-h': ['', 'Display this help message'],
-    '-p': ['', 'port for your local registry'],
-    '-pp': ['', 'port for your pouch db server'],
-    '-s': ['', 'remote skim address to sync package info from'],
-    '-u': ['', 'url to your local registry'],
-    '-d': ['', 'directory to store pouchdb data'],
+    '-p': [5501, 'port for your local registry'],
+    '-pp': [6543, 'port for your pouch db server'],
+    '-s': ['https://replicate.npmjs.com', 'remote skim address to sync package info from'],
+    '-u': ['http://localhost:5501', 'url to your local registry'],
+    '-d': ['./', 'directory to store pouchdb data'],
 };
 
 module.exports = function argparser(arglist) {
     arglist = arglist.slice(2)
-
-    if(arglist.length == 0){
-        console.error('Error: no arguments passed\n');
-        displayHelp();
-    }
 
     if(arglist[0] == '-h' || arglist[0] == '--help')
         displayHelp()
@@ -56,7 +40,13 @@ module.exports = function argparser(arglist) {
     if(arglist.length > 1 && arglist.includes('-v') || arglist.includes('--version'))
         error('Error: you cannot get the version this way')
 
-    return args
+    return {
+        'port': parseInt(args["-p"][0]),
+        'db_port': parseInt(args["-pp"][0]),
+        'skim': args["-s"][0],
+        'url': args["-u"][0],
+        'dir': args["-d"][0]
+    }
 }
 
 function error(msg) {

@@ -1,3 +1,4 @@
+const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
 const PouchDB = require('pouchdb');
@@ -5,8 +6,10 @@ const { Level } = require('level');
 const PouchServer = require('express-pouchdb')
 const cors = require('cors')
 
-const Store = new Level('filehost', { valueEncoding: 'binary' });
 const argparser = require('./utils/args')
+const argv = argparser(process.argv);
+
+const Store = new Level(path.resolve(argv.dir, 'filehost'), { valueEncoding: 'binary' });
 const app = express();
 const pouchapp = PouchServer(PouchDB);
 
@@ -17,11 +20,9 @@ pouchapp.use(cors({
     allowedHeaders:["Authorization", "Origin", "Referer"]
 }))
 
-// pouchapp.setPouchDB(PouchDB)
+pouchapp.listen(argv.db_port, () => console.log(`PouchServer running`))
 
-pouchapp.listen(6789, () => console.log(`PouchServer running`))
-
-const REMOTE_SKIM = 'https://replicate.npmjs.com';
+const REMOTE_SKIM = argv.skim;
 const LOCAL_SKIM = 'opm_new';
 
 const localSkim = new PouchDB(LOCAL_SKIM);
@@ -32,15 +33,14 @@ localSkim.changes({
     live: true
 }).on('change', () => console.log('Updated'));
 
-const argv = argparser(process.argv);
 
 app.get('/:name', (req,res) => {
     let packageName = req.params.name;
     getPackage(packageName).then(package => {
         const versions = Object.keys(package.versions);
         versions.forEach(version => {
-            package.versions[version].dist.tarball = `http://localhost:5500/tarballs/${package.name}/${version}.tgz`
-            package.versions[version].dist.info = `http://localhost:5500/${package.name}/${version}`;
+            package.versions[version].dist.tarball = `${argv['url']}/tarballs/${package.name}/${version}.tgz`
+            package.versions[version].dist.info = `${argv['url']}/${package.name}/${version}`;
         })
 
         res.send(package);
@@ -97,19 +97,20 @@ app.get('/tarballs/:name/:version.tgz', (req,res) => {
 })
 app.get('/tarballs/:user/:package/:version.tgz', (req,res) => {})
 
-app.listen(5500, () => console.log(`Server started on port 5500`))
+app.listen(argv.port, () => console.log(`Server started on port ${argv.port}`))
 
 function getPackage(name) {
     return localSkim.get(name)
         .catch(() => {
             return remoteSkim.get(name)
                 .then(package => {
-                    // console.log(package)
                     delete package['_rev']
                     return localSkim.post(package)
                 })
                 .then(() => {
                     return localSkim.get(name);
                 })
-            }).catch(err => console.error(err))
+            }).catch(err => {
+                console.error('You are offline and package not found locally')
+            })
 }
