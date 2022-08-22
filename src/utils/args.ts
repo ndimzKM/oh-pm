@@ -1,18 +1,6 @@
-const supportedArgs = [
-    '-h', '--help', '-v', '--version', '-p', '--port', '-pp',
-    '--pouch-port', '-s', '--skim', '-u', '--url', '-d', '--dir'
-];
+import { supportedArgs, args, ArgList, ArgKey } from "./configs";
 
-const args = {
-    '-h': ['', 'Display this help message'],
-    '-p': [5501, 'port for your local registry'],
-    '-pp': [6543, 'port for your pouch db server'],
-    '-s': ['https://replicate.npmjs.com', 'remote skim address to sync package info from'],
-    '-u': ['http://localhost:5501', 'url to your local registry'],
-    '-d': ['./', 'directory to store pouchdb data'],
-};
-
-module.exports = function argparser(arglist) {
+export default function argparser(arglist: ArgList) {
     arglist = arglist.slice(2)
 
     if(arglist[0] == '-h' || arglist[0] == '--help')
@@ -31,7 +19,8 @@ module.exports = function argparser(arglist) {
                 if(!supportedArgs.includes(arglist[i]))
                     error(`Error: ${arglist[i]} is not supported as an argument`)
 
-                args[arglist[i]][0] = arglist[i+1];
+                let currentArg: ArgKey = arglist[i];
+                args[currentArg] = arglist[i+1];
             }catch(error) {
                 console.error(error);
             }
@@ -41,15 +30,15 @@ module.exports = function argparser(arglist) {
         error('Error: you cannot get the version this way')
 
     return {
-        'port': parseInt(args["-p"][0]),
-        'db_port': parseInt(args["-pp"][0]),
-        'skim': args["-s"][0],
-        'url': args["-u"][0],
-        'dir': args["-d"][0]
+        'port': args["-p"] as number,
+        'db_port': args["-pp"] as number,
+        'skim': args["-s"] as string,
+        'url': args["-u"] as string,
+        'dir': args["-d"] as string
     }
 }
 
-function error(msg) {
+function error(msg: string) {
     console.error(msg)
     process.exit(-1);
 }
