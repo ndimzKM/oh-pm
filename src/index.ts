@@ -1,9 +1,11 @@
 import { resolve } from 'path';
 import { createHash } from 'crypto';
-import express, { Application, Request, Response } from 'express';
-import PouchDB from 'pouchdb';
 import { Level } from 'level';
+import { Application, Request, Response } from 'express';
+
 import PouchServer from 'express-pouchdb';
+import express from 'express';
+import PouchDB from 'pouchdb';
 import cors from 'cors';
 import axios from 'axios';
 
@@ -14,11 +16,11 @@ const argv = argparser(process.argv);
 const Store = new Level(resolve(argv.dir, 'filehost'), {
     valueEncoding: 'binary',
 });
+
 const app: Application = express();
+
 const pouchapp = PouchServer(PouchDB);
-
 pouchapp.use(cors(CorsValues));
-
 pouchapp.listen(argv.db_port, () => console.log(`PouchServer running`));
 
 const REMOTE_SKIM = argv.skim;
@@ -117,7 +119,7 @@ app.listen(argv.port, () => {
     console.log(`Server started on port ${argv.port}`);
 });
 
-function getPackage(name: string) {
+const getPackage = (name: string) => {
     return localSkim
         .get(name)
         .catch(() => {
@@ -134,4 +136,4 @@ function getPackage(name: string) {
         .catch(err => {
             console.error('You are offline and package not found locally');
         });
-}
+};
