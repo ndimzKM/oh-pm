@@ -1,12 +1,13 @@
 {
-  "name": "test-opm",
+  "name": "oh-pm",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
     "start": "nodemon --watch './**/*.ts' --exec 'node  --loader ts-node/esm' src/index.ts",
     "build": "tsc"
   },
+  "bin": {"oh-pm":"./dist/index.js"},
   "files": [
     "dist/**/*"
   ],
