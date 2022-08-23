@@ -141,7 +141,7 @@ const getPackage = (name: string) => {
                     return localSkim.get(name);
                 });
         })
-        .catch(err => {
-            console.error('You are offline and package not found locally');
+        .catch(() => {
+            console.log('- ', chalk.red('You are offline and package not found locally'));
         });
 };
