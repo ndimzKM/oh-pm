@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { createHash } from 'crypto';
 import { Level } from 'level';
+import chalk from 'chalk'
 import { Application, Request, Response } from 'express';
 
 import PouchServer from 'express-pouchdb';
@@ -17,11 +18,18 @@ const Store = new Level(resolve(argv.dir, 'filehost'), {
     valueEncoding: 'binary',
 });
 
+// Salutations
+console.log(`👋 Bienvenue to ${chalk.bold.cyan('oh-pm')}, 'the' offline first package manager\n`);
+console.log(`To display help message, run:\n    ${chalk.green(`$ oh-pm --help`)}\n`);
+console.log(`Set your registry to oh-pm with:\n    ${chalk.green(`$ npm set registry ${argv.url}`)}\n`);
+console.log(`To revert back to original, run:\n    ${chalk.green(`$ npm set registry https://registry.npmjs.com`)}\n`);
+console.log(chalk.bold('Activities:'));
+
 const app: Application = express();
 
 const pouchapp = PouchServer(PouchDB);
 pouchapp.use(cors(CorsValues));
-pouchapp.listen(argv.db_port, () => console.log(`PouchServer running`));
+pouchapp.listen(argv.db_port, () => console.log('- ', chalk.yellow(`PouchServer running on port `), chalk.bold.yellow(argv.db_port)));
 
 const REMOTE_SKIM = argv.skim;
 const LOCAL_SKIM = 'opm_new';
@@ -116,7 +124,7 @@ app.get('/tarballs/:name/:version.tgz', (req: Request, res: Response) => {
 // app.get('/tarballs/:user/:package/:version.tgz', (req: Request,res:Response) => {})
 
 app.listen(argv.port, () => {
-    console.log(`Server started on port ${argv.port}`);
+    console.log('-',` ${chalk.yellow(`${chalk.bold.yellow('oh-pm')} server started on port ${chalk.bold.yellow(argv.port)}`)}`)
 });
 
 const getPackage = (name: string) => {

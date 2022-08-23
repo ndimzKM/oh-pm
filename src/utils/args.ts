@@ -5,6 +5,8 @@ export default function argparser(arglist: ArgList) {
 
     if (arglist[0] == '-h' || arglist[0] == '--help') displayHelp();
 
+    if(arglist[0] == '-v' || arglist[0] == '--version') displayVersion();
+
     if (arglist.length % 2 !== 0) error('Error: uneven number of arguments');
 
     for (let i = 0; i < arglist.length; i++) {
@@ -57,6 +59,13 @@ function displayHelp() {
     console.log('    -pp     port for your pouch db server');
     console.log('    -u      url to use for your local registry');
     console.log('    -d      directory to store pouchdb data');
+
+    process.exit(0);
+}
+
+function displayVersion() {
+    let pkg = require('../../package.json')
+    console.log(pkg.version)
 
     process.exit(0);
 }
