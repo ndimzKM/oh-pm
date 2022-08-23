@@ -1,4 +1,3 @@
-#!/usr/bin/env ts-node
 import { resolve } from 'path';
 import { createHash } from 'crypto';
 import { Level } from 'level';

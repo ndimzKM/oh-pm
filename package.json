@@ -1,16 +1,13 @@
 {
   "name": "oh-pm",
   "version": "1.0.0",
-  "main": "./dist/index.js",
+  "main": "./bin/oh-pm.js",
   "license": "MIT",
   "scripts": {
     "start": "nodemon --watch './**/*.ts' --exec 'node  --loader ts-node/esm' src/index.ts",
     "build": "tsc"
   },
-  "bin": {"oh-pm":"./dist/index.js"},
-  "files": [
-    "dist/**/*"
-  ],
+  "bin": {"oh-pm":"./bin/oh-pm.js"},
   "dependencies": {
     "axios": "^0.27.2",
     "cors": "^2.8.5",
