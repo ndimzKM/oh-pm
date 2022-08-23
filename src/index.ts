@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { resolve } from 'path';
 import { createHash } from 'crypto';
 import { Level } from 'level';
