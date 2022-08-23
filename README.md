@@ -4,9 +4,13 @@
 ![GitHub code size](https://img.shields.io/github/languages/code-size/ndimzKM/notexpress)
 ![Version](https://img.shields.io/npm/v/@ndimz/notexpress)
 
-It is a local Node.js server that allows you to have your own local npm registry. It has a simple database where packages are cached.
+It is a local Node.js server that allows you to have your own local npm registry. It has a simple database where packages are cached. Packages that have already been installed, do not require internet to be installed again.
 
-Packages that have already been installed, do not require internet to be installed again.
+# How it works
+- it looks for the package in the local db
+- if found, package is simply installed
+- if not found, it fetches it from the main npm registry and store it in the local db
+- repeat step 1 and 2
 
 # Installation
 ```
