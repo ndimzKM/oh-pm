@@ -1,14 +1,12 @@
 ```oh-pm``` an offline first package manager.
+
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 ![GitHub code size](https://img.shields.io/github/languages/code-size/ndimzKM/notexpress)
 ![Version](https://img.shields.io/npm/v/@ndimz/notexpress)
 
 It is a local Node.js server that allows you to have your own local npm registry. It has a simple database where packages are cached.
 
-By any chance you are offline, cached packages can still be installed without internet.
-
-# Why use ```oh-pm```
-- packages that have already been installed, do not require internet to be installed again.
+Packages that have already been installed, do not require internet to be installed again.
 
 # Installation
 ```
