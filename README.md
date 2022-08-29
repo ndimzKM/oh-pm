@@ -23,6 +23,7 @@ $ oh-pm
 The above command can take optional arguments. To see available arguments, run:
 
 # Default values for the arguments
+These arguments are optional.
 ```
     -p  5501   # port number to use for local registry
     -pp 6543   # port number for the pouchdb server
