@@ -1,10 +1,10 @@
 {
   "name": "oh-pm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./bin/oh-pm.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
-  "prepublish":"tsc",
+  "prepublish": "tsc",
   "scripts": {
     "start": "nodemon --watch './**/*.ts' --exec 'node  --loader ts-node/esm' src/index.ts",
     "build": "tsc"
