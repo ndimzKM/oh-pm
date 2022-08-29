@@ -21,7 +21,9 @@ In order to start the server:
 $ oh-pm
 ```
 The above command can take optional arguments. To see available arguments, run:
-
+```
+$ oh-pm --help
+```
 # Default values for the arguments
 These arguments are optional.
 ```
@@ -30,10 +32,6 @@ These arguments are optional.
     -u  http://localhost:5501 # url for local registry
     -d  ./     # directory to store pouchdb data
 
-```
-
-```
-$ oh-pm --help
 ```
 You are all set. To set as registry, while the server is running, in a new terminal, run:
 ```
