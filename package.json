@@ -4,6 +4,13 @@
   "main": "./bin/oh-pm.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "keywords": [
+    "package manager",
+    "npm",
+    "oh-pm",
+    "offline",
+    "yarn"
+  ],
   "prepublish": "tsc",
   "scripts": {
     "start": "nodemon --watch './**/*.ts' --exec 'node  --loader ts-node/esm' src/index.ts",
