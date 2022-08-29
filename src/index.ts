@@ -1,9 +1,9 @@
 import { resolve } from 'path';
 import { createHash } from 'crypto';
 import { Level } from 'level';
-import chalk from 'chalk'
 import { Application, Request, Response } from 'express';
 
+import chalk from 'chalk'
 import PouchServer from 'express-pouchdb';
 import express from 'express';
 import PouchDB from 'pouchdb';

@@ -1,0 +1,10 @@
+.gitignore
+.npmignore
+_replicator
+_users
+filehost
+node_modules
+log.txt
+opm_new
+pouch__all_dbs__
+index.test.js
